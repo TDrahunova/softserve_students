@@ -44,7 +44,7 @@ class Address:
         self.building = building
 
     def __repr__(self):
-        return f"{self.zip}, {self.state} область, місто {self.city}, {self.street}, {self.building}"
+        return f"{self.zip}, {self.state.value} область, місто {self.city.value}, {self.street}, {self.building}"
 
 
 class Student:
@@ -65,4 +65,4 @@ class Student:
         self.group = group
 
     def __repr__(self):
-        return f"id: {self.id}, first_name={self.first_name}, last_name={self.last_name}, sur_name={self.sur_name}, address={self.address.__repr__()}, group={self.group.name}"
+        return f"id: {self.id}, first_name={self.first_name}, last_name={self.last_name}, sur_name={self.sur_name}, address={self.address.__repr__()}, group_name={self.group.name}"

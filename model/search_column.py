@@ -12,11 +12,11 @@ class SearchColumn:
 
 class SearchColumns:
     ID = SearchColumn("Номер справи", "id")
-    FIRST_NAME = SearchColumn("Імʼя", "firstname")
-    LAST_NAME = SearchColumn("Прізвище", "lastname")
-    SUR_NAME = SearchColumn("По-батькові", "surname")
+    FIRST_NAME = SearchColumn("Імʼя", "first_name")
+    LAST_NAME = SearchColumn("Прізвище", "last_name")
+    SUR_NAME = SearchColumn("По-батькові", "sur_name")
     ADDRESS = SearchColumn("Адреса", "address")
-    GROUP = SearchColumn("Група", "group")
+    GROUP = SearchColumn("Група", "group_name")
 
     ALL_OPTIONS = [ID, FIRST_NAME, LAST_NAME, SUR_NAME, ADDRESS, GROUP]
 
