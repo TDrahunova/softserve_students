@@ -16,7 +16,7 @@ class UiHelper:
             st.rerun()
 
     @staticmethod
-    def breadcrumb(inner: typing.Literal["students", "sql"]) -> None:
+    def breadcrumb(inner: typing.Literal["students", "sql", "tasks"]) -> None:
         col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
         with col1:
             st.page_link("start.py", label="Головна  /", icon="🏠")
@@ -25,3 +25,5 @@ class UiHelper:
                 st.page_link("pages/students.py", label="Студенти", icon="🎓")
             if inner == "sql":
                 st.page_link("pages/sql.py", label="SQL", icon="⛄")
+            if inner == "tasks":
+                st.page_link("pages/tasks.py", label="Завдання", icon="💀")
