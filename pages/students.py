@@ -16,10 +16,8 @@ all_students_count = SQL.get_students_count()
 
 class PageHelper:
     per_page = st.session_state.get(Key.STUDENTS_PER_PAGE, Default.PER_PAGE_COUNT)
-
-    @property
-    def page(self) -> int:
-        return st.session_state.get(Key.PAGE_NUMBER, Default.START_PAGE_NUMBER)
+    _page = st.session_state.get(Key.PAGE_NUMBER, Default.START_PAGE_NUMBER)
+    page = _page
 
     def last_page(self, the_students: pandas.DataFrame | int | None) -> int:
         students_count = the_students if isinstance(the_students, int) else None
@@ -51,11 +49,14 @@ with search_col_2:
     search_value = st.text_input("Значення для пошуку")
 with search_col_3:
     if st.button("Пошук"):
+        st.session_state.setdefault(Key.PAGE_NUMBER, Default.START_PAGE_NUMBER)
+        ph.page = Default.START_PAGE_NUMBER
         search_filter = SearchFilter(search_column, search_value)
 with search_col_4:
     if st.button("Очистити пошуковий фільтр"):
-        page = Default.START_PAGE_NUMBER
         search_filter = None
+        st.session_state.setdefault(Key.PAGE_NUMBER, Default.START_PAGE_NUMBER)
+        ph.page = Default.START_PAGE_NUMBER
         st.rerun()
 
 page = ph.page
