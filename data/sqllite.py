@@ -27,8 +27,11 @@ class SQL:
             page_number: int = Default.START_PAGE_NUMBER,
             per_page: int = Default.PER_PAGE_COUNT
     ) -> pandas.DataFrame:
-        students_data = conn.query(
-            f'select s.id,s.first_name,s.last_name,s.sur_name,s.address,std_group.group_name from students as s join std_group on std_group.id=s.group_id limit {per_page} OFFSET {page_number - 1 * per_page}')
+        select = "select s.id,s.first_name,s.last_name,s.sur_name,s.address,std_group.group_name"
+        from_t = "from students as s join std_group on std_group.id=s.group_id"
+        limit = f"limit {per_page} OFFSET {(page_number - 1) * per_page}"
+        sql = f"{select} {from_t} {limit}"
+        students_data = conn.query(sql)
         return students_data
 
     @staticmethod
@@ -83,7 +86,7 @@ class SQL:
         select = 'select s.id,s.first_name,s.last_name,s.sur_name,s.address,std_group.group_name from students as s'
         join = 'join std_group on std_group.id=s.group_id'
         where = f"where {filter} like '%{search_filter.search_value}%'"
-        offset = f"limit {per_page} OFFSET {page_number - 1 * per_page}"
+        offset = f"limit {per_page} OFFSET {(page_number - 1) * per_page}"
         return conn.query(f"{select} {join} {where} {offset}")
 
     @staticmethod

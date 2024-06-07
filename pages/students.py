@@ -59,18 +59,20 @@ with search_col_4:
         st.rerun()
 
 page = ph.page
-found_students = SQL.get_filtered_students(search_filter) if search_filter else SQL.get_page_students(ph.page,
-                                                                                                      ph.per_page)
+found_students = SQL.get_filtered_students(search_filter) if search_filter else all_students
+paged_students = SQL.get_paged_filtered_students(ph.page, ph.per_page,
+                                                 search_filter) if search_filter else SQL.get_page_students(ph.page,
+                                                                                                            ph.per_page)
 
 start_records = (page - 1) * ph.per_page + 1
-records_found = SQL.get_records_count(found_students) if search_filter else all_students_count
 
+records_found = SQL.get_records_count(found_students)
 end_records = start_records + ph.per_page if records_found % ph.per_page == 0 else page * ph.per_page
 
 if search_filter:
     if records_found:
         st.write(
-            f"Показані {start_records}-{end_records} із {len(found_students)} записів"
+            f"Показані {start_records}-{end_records} із {len(paged_students)} записів"
         )
     else:
         st.write(f"Записів не знайдено")
@@ -88,12 +90,13 @@ column_config = {
     Column.GROUP.value: st.column_config.TextColumn(Column.GROUP.label)
 }
 
-students_data = SQL.get_paged_filtered_students(page, per_page=ph.per_page, search_filter=search_filter)
-if not SQL.get_records_count(students_data):
-    err_1,err_2,err3 = st.columns(3)
-    st.write(f"### :grey[Студентів за пошуком '{search_filter.search_column.label}' = '{search_filter.search_value}' не знайдено]", )
+# paged_data = SQL.get_paged_filtered_students(page, per_page=ph.per_page, search_filter=search_filter)
+if not SQL.get_records_count(paged_students):
+    err_1, err_2, err3 = st.columns(3)
+    st.write(
+        f"### :grey[Студентів за пошуком '{search_filter.search_column.label}' = '{search_filter.search_value}' не знайдено]", )
 else:
-    st.dataframe(data=students_data, column_config=column_config, hide_index=True)
+    st.dataframe(data=paged_students, column_config=column_config, hide_index=True)
 
     c1, c2, c3, c4, c5, c6, c7, c8 = st.columns(8)
 

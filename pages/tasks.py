@@ -10,11 +10,6 @@ UiHelper.breadcrumb("tasks")
 test_case_tab, bug_tab, sql_tab = st.tabs(["Тест кейси", "Дефект репорти", "SQL querry"])
 
 
-def pretty_print(dframe: pandas.DataFrame):
-    # st.dataframe(df, column_config=TEST_COLUMN_CONFIG, hide_index=True)
-    return display(HTML(dframe.to_html().replace("\\n", "<br>")))
-
-
 with test_case_tab:
     st.markdown("#### Task: Write 1 functional and 1 UI test case to test this page")
     st.divider()
